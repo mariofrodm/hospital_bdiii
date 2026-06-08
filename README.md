@@ -112,7 +112,7 @@ mongosh "mongodb://localhost:27017/clinica_privada_mongo" < mongo/03_pipelines_r
 ### Endpoints MongoDB
 - `GET /api/mongo/estado` -> Conteo de documentos de historiales.
 - `GET /api/mongo/historiales/paciente/:id_paciente` -> Historiales del paciente.
-- `POST /api/mongo/historiales` -> Inserta historial clínico previo chequeo de cita atendida en PostgreSQL.
+- `POST /api/mongo/historiales` -> Inserta historial clínico previo chequeo de cita atendida en PostgreSQL (rechaza duplicados de id_cita con HTTP 409).
 - `GET /api/mongo/reportes/diagnosticos-top` -> Pipeline 1 (Top Diagnósticos).
 - `GET /api/mongo/reportes/medicamentos` -> Pipeline 2 (Top Medicamentos).
 - `GET /api/mongo/reportes/signos-vitales` -> Pipeline 3 (Promedio Signos).
