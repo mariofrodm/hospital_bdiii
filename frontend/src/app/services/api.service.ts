@@ -61,4 +61,16 @@ export class ApiService {
   obtenerBackupEstado(): Observable<any> {
     return this.http.get(`${this.apiUrl}/backup/estado`);
   }
+
+  registrarPago(datos: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/operaciones/registrar-pago`, datos);
+  }
+
+  cancelarCita(datos: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/operaciones/cancelar-cita`, datos);
+  }
+
+  refrescarMaterializadas(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/operaciones/refresh-materializadas`, {});
+  }
 }

@@ -26,6 +26,23 @@ export class AppComponent implements OnInit {
 
   backupEstado: any = null;
 
+  pago = {
+    id_factura: 3,
+    id_usuario: 1,
+    monto: 5,
+    metodo_pago: 'efectivo',
+    referencia: 'Pago desde interfaz Angular'
+  };
+
+  cancelacion = {
+    id_cita: 156,
+    id_usuario: 1,
+    motivo_cancelacion: 'Cancelación desde interfaz Angular para demo'
+  };
+
+  mensajeOperacion = '';
+  errorOperacion = '';
+
   cargando = true;
   error = '';
 
@@ -93,6 +110,51 @@ export class AppComponent implements OnInit {
     this.apiService.obtenerHistorialesPaciente(this.idPacienteBusqueda).subscribe({
       next: (respuesta) => this.historialesPaciente = respuesta.datos || [],
       error: () => this.historialesPaciente = []
+    });
+  }
+
+  registrarPago(): void {
+    this.mensajeOperacion = '';
+    this.errorOperacion = '';
+
+    this.apiService.registrarPago(this.pago).subscribe({
+      next: (respuesta) => {
+        this.mensajeOperacion = respuesta.mensaje || 'Pago registrado correctamente.';
+        this.cargarTodo();
+      },
+      error: (error) => {
+        this.errorOperacion = error.error?.error || error.error?.mensaje || 'No se pudo registrar el pago.';
+      }
+    });
+  }
+
+  cancelarCita(): void {
+    this.mensajeOperacion = '';
+    this.errorOperacion = '';
+
+    this.apiService.cancelarCita(this.cancelacion).subscribe({
+      next: (respuesta) => {
+        this.mensajeOperacion = respuesta.mensaje || 'Cita cancelada correctamente.';
+        this.cargarTodo();
+      },
+      error: (error) => {
+        this.errorOperacion = error.error?.error || error.error?.mensaje || 'No se pudo cancelar la cita.';
+      }
+    });
+  }
+
+  refrescarMaterializadas(): void {
+    this.mensajeOperacion = '';
+    this.errorOperacion = '';
+
+    this.apiService.refrescarMaterializadas().subscribe({
+      next: (respuesta) => {
+        this.mensajeOperacion = respuesta.mensaje || 'Vistas materializadas actualizadas.';
+        this.cargarTodo();
+      },
+      error: (error) => {
+        this.errorOperacion = error.error?.error || 'No se pudieron refrescar las vistas materializadas.';
+      }
     });
   }
 }

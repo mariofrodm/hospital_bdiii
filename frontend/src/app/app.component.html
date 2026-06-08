@@ -321,6 +321,99 @@
     </section>
 
     <section class="rounded-xl bg-white p-6 shadow">
+      <h2 class="text-xl font-bold">Operaciones críticas</h2>
+      <p class="mt-1 text-sm text-slate-600">
+        Gestión operativa desde Angular usando stored procedures de PostgreSQL.
+      </p>
+
+      <div *ngIf="mensajeOperacion" class="mt-4 rounded-lg bg-green-50 p-4 text-sm text-green-700">
+        {{ mensajeOperacion }}
+      </div>
+
+      <div *ngIf="errorOperacion" class="mt-4 rounded-lg bg-red-50 p-4 text-sm text-red-700">
+        {{ errorOperacion }}
+      </div>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+        <form class="rounded-xl border border-slate-200 bg-slate-50 p-4" (ngSubmit)="registrarPago()">
+          <h3 class="font-semibold">Registrar pago</h3>
+
+          <div class="mt-4 grid gap-3 md:grid-cols-2">
+            <label class="text-sm">
+              ID factura
+              <input class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" type="number" [(ngModel)]="pago.id_factura" name="id_factura">
+            </label>
+
+            <label class="text-sm">
+              ID usuario
+              <input class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" type="number" [(ngModel)]="pago.id_usuario" name="id_usuario_pago">
+            </label>
+
+            <label class="text-sm">
+              Monto
+              <input class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" type="number" step="0.01" [(ngModel)]="pago.monto" name="monto">
+            </label>
+
+            <label class="text-sm">
+              Método
+              <select class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" [(ngModel)]="pago.metodo_pago" name="metodo_pago">
+                <option value="efectivo">efectivo</option>
+                <option value="tarjeta">tarjeta</option>
+                <option value="transferencia">transferencia</option>
+                <option value="cheque">cheque</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="mt-3 block text-sm">
+            Referencia
+            <input class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" type="text" [(ngModel)]="pago.referencia" name="referencia">
+          </label>
+
+          <button type="submit" class="mt-4 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
+            Registrar pago
+          </button>
+        </form>
+
+        <form class="rounded-xl border border-slate-200 bg-slate-50 p-4" (ngSubmit)="cancelarCita()">
+          <h3 class="font-semibold">Cancelar cita</h3>
+
+          <div class="mt-4 grid gap-3 md:grid-cols-2">
+            <label class="text-sm">
+              ID cita
+              <input class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" type="number" [(ngModel)]="cancelacion.id_cita" name="id_cita">
+            </label>
+
+            <label class="text-sm">
+              ID usuario
+              <input class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" type="number" [(ngModel)]="cancelacion.id_usuario" name="id_usuario_cancelacion">
+            </label>
+          </div>
+
+          <label class="mt-3 block text-sm">
+            Motivo de cancelación
+            <textarea class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" rows="3" [(ngModel)]="cancelacion.motivo_cancelacion" name="motivo_cancelacion"></textarea>
+          </label>
+
+          <button type="submit" class="mt-4 rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white hover:bg-red-600">
+            Cancelar cita
+          </button>
+        </form>
+      </div>
+
+      <div class="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <h3 class="font-semibold">Vistas materializadas</h3>
+        <p class="mt-1 text-sm text-slate-600">
+          Actualiza mv_facturacion_mensual y mv_ranking_medicos_trimestral después de cambios operativos.
+        </p>
+
+        <button type="button" class="mt-4 rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600" (click)="refrescarMaterializadas()">
+          Refrescar vistas materializadas
+        </button>
+      </div>
+    </section>
+
+    <section class="rounded-xl bg-white p-6 shadow">
       <h2 class="text-xl font-bold">Backup y restauración</h2>
       <p class="mt-2 text-sm text-slate-600">{{ backupEstado?.mensaje }}</p>
       <p class="mt-4 text-sm"><strong>Base principal:</strong> {{ backupEstado?.base_principal }}</p>
