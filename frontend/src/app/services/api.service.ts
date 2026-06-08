@@ -38,6 +38,26 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/mongo/estado`);
   }
 
+  obtenerHistorialesPaciente(idPaciente: number): Observable<RespuestaApi<any[]>> {
+    return this.http.get<RespuestaApi<any[]>>(`${this.apiUrl}/mongo/historiales/paciente/${idPaciente}`);
+  }
+
+  obtenerDiagnosticosTop(): Observable<RespuestaApi<any[]>> {
+    return this.http.get<RespuestaApi<any[]>>(`${this.apiUrl}/mongo/reportes/diagnosticos-top`);
+  }
+
+  obtenerMedicamentosMongo(): Observable<RespuestaApi<any[]>> {
+    return this.http.get<RespuestaApi<any[]>>(`${this.apiUrl}/mongo/reportes/medicamentos`);
+  }
+
+  obtenerSignosVitales(): Observable<RespuestaApi<any[]>> {
+    return this.http.get<RespuestaApi<any[]>>(`${this.apiUrl}/mongo/reportes/signos-vitales`);
+  }
+
+  obtenerResumenFacet(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/mongo/reportes/resumen-facet`);
+  }
+
   obtenerBackupEstado(): Observable<any> {
     return this.http.get(`${this.apiUrl}/backup/estado`);
   }

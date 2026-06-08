@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ApiService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -14,7 +15,15 @@ export class AppComponent implements OnInit {
   facturasPendientes: any[] = [];
   facturacionMensual: any[] = [];
   rankingMedicos: any[] = [];
+
   mongoEstado: any = null;
+  historialesPaciente: any[] = [];
+  diagnosticosTop: any[] = [];
+  medicamentosMongo: any[] = [];
+  signosVitales: any[] = [];
+  resumenFacet: any = null;
+  idPacienteBusqueda = 1;
+
   backupEstado: any = null;
 
   cargando = true;
@@ -57,8 +66,33 @@ export class AppComponent implements OnInit {
       next: (respuesta) => this.mongoEstado = respuesta
     });
 
+    this.apiService.obtenerDiagnosticosTop().subscribe({
+      next: (respuesta) => this.diagnosticosTop = (respuesta.datos || []).slice(0, 8)
+    });
+
+    this.apiService.obtenerMedicamentosMongo().subscribe({
+      next: (respuesta) => this.medicamentosMongo = (respuesta.datos || []).slice(0, 8)
+    });
+
+    this.apiService.obtenerSignosVitales().subscribe({
+      next: (respuesta) => this.signosVitales = respuesta.datos || []
+    });
+
+    this.apiService.obtenerResumenFacet().subscribe({
+      next: (respuesta) => this.resumenFacet = respuesta.datos
+    });
+
     this.apiService.obtenerBackupEstado().subscribe({
       next: (respuesta) => this.backupEstado = respuesta
+    });
+
+    this.buscarHistorialesPaciente();
+  }
+
+  buscarHistorialesPaciente(): void {
+    this.apiService.obtenerHistorialesPaciente(this.idPacienteBusqueda).subscribe({
+      next: (respuesta) => this.historialesPaciente = respuesta.datos || [],
+      error: () => this.historialesPaciente = []
     });
   }
 }
