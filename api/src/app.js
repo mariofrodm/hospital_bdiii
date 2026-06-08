@@ -1,11 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const pool = require('./config/postgres');
+const reportesRoutes = require('./routes/reportes.routes');
+const catalogosRoutes = require('./routes/catalogos.routes');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use('/api/reportes', reportesRoutes);
+app.use('/api/catalogos', catalogosRoutes);
 
 app.get('/api/health', async (req, res) => {
   try {
