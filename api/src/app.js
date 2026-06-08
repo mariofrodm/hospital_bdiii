@@ -5,6 +5,8 @@ const reportesRoutes = require('./routes/reportes.routes');
 const catalogosRoutes = require('./routes/catalogos.routes');
 const operacionesRoutes = require('./routes/operaciones.routes');
 const auditoriaRoutes = require('./routes/auditoria.routes');
+const mongoRoutes = require('./routes/mongo.routes');
+const backupRoutes = require('./routes/backup.routes');
 
 const app = express();
 
@@ -15,6 +17,8 @@ app.use('/api/reportes', reportesRoutes);
 app.use('/api/catalogos', catalogosRoutes);
 app.use('/api/operaciones', operacionesRoutes);
 app.use('/api/auditoria', auditoriaRoutes);
+app.use('/api/mongo', mongoRoutes);
+app.use('/api/backup', backupRoutes);
 
 app.get('/api/health', async (req, res) => {
   try {
