@@ -144,7 +144,7 @@ db.historiales_clinicos.aggregate([
 // Tiempo promedio entre consultas por paciente
 // ======================================================
 
-[
+db.historiales_clinicos.aggregate([
   {
     $addFields: {
       fecha_consulta_date: {
@@ -198,10 +198,7 @@ db.historiales_clinicos.aggregate([
       id_paciente: "$_id",
       cantidad_intervalos: 1,
       promedio_dias_entre_consultas: {
-        $round: [
-          "$promedio_dias_entre_consultas",
-          2
-        ]
+        $round: ["$promedio_dias_entre_consultas", 2]
       }
     }
   },
@@ -210,7 +207,7 @@ db.historiales_clinicos.aggregate([
       promedio_dias_entre_consultas: 1
     }
   }
-]
+]);
 
 // ======================================================
 // PIPELINE 5
@@ -221,10 +218,10 @@ db.historiales_clinicos.aggregate([
   {
     $facet: {
       diagnosticos_frecuentes: [
-        { $unwind: '$diagnosticos' },
+        { $unwind: "$diagnosticos" },
         {
           $group: {
-            _id: '$diagnosticos.descripcion',
+            _id: "$diagnosticos.descripcion",
             cantidad: { $sum: 1 }
           }
         },
@@ -233,10 +230,10 @@ db.historiales_clinicos.aggregate([
       ],
 
       medicamentos_frecuentes: [
-        { $unwind: '$medicamentos' },
+        { $unwind: "$medicamentos" },
         {
           $group: {
-            _id: '$medicamentos.nombre',
+            _id: "$medicamentos.nombre",
             cantidad: { $sum: 1 }
           }
         },
@@ -249,20 +246,20 @@ db.historiales_clinicos.aggregate([
           $group: {
             _id: null,
             total_historiales: { $sum: 1 },
-            promedio_presion_sistolica: { $avg: '$signos_vitales.presion_sistolica' },
-            promedio_presion_diastolica: { $avg: '$signos_vitales.presion_diastolica' },
-            promedio_frecuencia_cardiaca: { $avg: '$signos_vitales.frecuencia_cardiaca' },
-            promedio_temperatura: { $avg: '$signos_vitales.temperatura' }
+            promedio_presion_sistolica: { $avg: "$signos_vitales.presion_sistolica" },
+            promedio_presion_diastolica: { $avg: "$signos_vitales.presion_diastolica" },
+            promedio_frecuencia_cardiaca: { $avg: "$signos_vitales.frecuencia_cardiaca" },
+            promedio_temperatura: { $avg: "$signos_vitales.temperatura" }
           }
         },
         {
           $project: {
             _id: 0,
             total_historiales: 1,
-            promedio_presion_sistolica: { $round: ['$promedio_presion_sistolica', 2] },
-            promedio_presion_diastolica: { $round: ['$promedio_presion_diastolica', 2] },
-            promedio_frecuencia_cardiaca: { $round: ['$promedio_frecuencia_cardiaca', 2] },
-            promedio_temperatura: { $round: ['$promedio_temperatura', 2] }
+            promedio_presion_sistolica: { $round: ["$promedio_presion_sistolica", 2] },
+            promedio_presion_diastolica: { $round: ["$promedio_presion_diastolica", 2] },
+            promedio_frecuencia_cardiaca: { $round: ["$promedio_frecuencia_cardiaca", 2] },
+            promedio_temperatura: { $round: ["$promedio_temperatura", 2] }
           }
         }
       ]
