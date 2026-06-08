@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const pool = require('./config/postgres');
 const reportesRoutes = require('./routes/reportes.routes');
 const catalogosRoutes = require('./routes/catalogos.routes');
@@ -22,17 +23,24 @@ app.use('/api/backup', backupRoutes);
 
 app.get('/api/health', async (req, res) => {
   try {
-    const resultado = await pool.query('SELECT current_database() AS database, current_user AS usuario, NOW() AS fecha_servidor');
+    const resultado = await pool.query(
+      'SELECT current_database() AS database, current_user AS usuario, NOW() AS fecha_servidor'
+    );
+
     res.json({
       ok: true,
       mensaje: 'API Clínica Privada funcionando correctamente.',
       postgres: resultado.rows[0],
-      mongodb: 'pendiente de integración'
+      mongodb: {
+        conectado: mongoose.connection.readyState === 1,
+        estado: mongoose.connection.readyState === 1 ? 'integrado' : 'no conectado',
+        base: mongoose.connection.db?.databaseName || null
+      }
     });
   } catch (error) {
     res.status(500).json({
       ok: false,
-      mensaje: 'La API inició, pero no pudo conectarse a PostgreSQL.',
+      mensaje: 'La API inició, pero no pudo validar PostgreSQL.',
       error: error.message
     });
   }
