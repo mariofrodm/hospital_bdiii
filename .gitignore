@@ -4,3 +4,5 @@ dist/
 .angular/
 .DS_Store
 npm-debug.log*
+
+Mongo/
