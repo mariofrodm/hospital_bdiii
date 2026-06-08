@@ -12,7 +12,7 @@ mongoimport --uri "mongodb://localhost:27017/clinica_privada_mongo" --collection
 * **Total de documentos en `historiales_clinicos`:** 150
 
 ## 4. Lista de Índices
-Se verificó la existencia de 7 índices (incluyendo `_id_`):
+Se verificó la existencia de 8 índices (incluyendo `_id_`):
 ```json
 [
   {
@@ -49,6 +49,12 @@ Se verificó la existencia de 7 índices (incluyendo `_id_`):
     "v": 2,
     "key": { "medicamentos.nombre": 1 },
     "name": "idx_historial_medicamento_nombre"
+  },
+  {
+    "v": 2,
+    "key": { "id_cita": 1 },
+    "name": "uq_historial_id_cita",
+    "unique": true
   }
 ]
 ```

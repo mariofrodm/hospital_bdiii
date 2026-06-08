@@ -47,5 +47,11 @@ db.historiales_clinicos.createIndex(
   { name: 'idx_historial_medicamento_nombre' }
 );
 
+// Índice único para asegurar que una cita tenga solo un historial clínico.
+db.historiales_clinicos.createIndex(
+  { id_cita: 1 },
+  { unique: true, name: 'uq_historial_id_cita' }
+);
+
 // Verificación de índices creados.
 db.historiales_clinicos.getIndexes();
