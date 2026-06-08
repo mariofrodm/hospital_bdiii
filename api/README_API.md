@@ -73,7 +73,7 @@ Esta API conecta PostgreSQL y MongoDB sin el uso de ORMs pesados o relacionales,
    curl http://localhost:3000/api/mongo/historiales/paciente/1
    ```
 
-3. **Insertar Historial Clínico (Valida primero cita en PostgreSQL):**
+3. **Insertar Historial Clínico (Valida cita en PostgreSQL y previene duplicados de id_cita con HTTP 409):**
    ```bash
    curl -X POST http://localhost:3000/api/mongo/historiales \
      -H "Content-Type: application/json" \

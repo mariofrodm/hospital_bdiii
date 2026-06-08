@@ -61,6 +61,15 @@ async function crearHistorial(req, res) {
       });
     }
 
+    // Buscar si ya existe un historial clínico para esta cita
+    const historialExistente = await HistorialClinico.findOne({ id_cita: Number(id_cita) });
+    if (historialExistente) {
+      return res.status(409).json({
+        ok: false,
+        mensaje: "La cita ya tiene un historial clínico registrado."
+      });
+    }
+
     const resultado = await pool.query(
       `SELECT
         c.id_cita,
