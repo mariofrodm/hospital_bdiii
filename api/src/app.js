@@ -3,6 +3,8 @@ const cors = require('cors');
 const pool = require('./config/postgres');
 const reportesRoutes = require('./routes/reportes.routes');
 const catalogosRoutes = require('./routes/catalogos.routes');
+const operacionesRoutes = require('./routes/operaciones.routes');
+const auditoriaRoutes = require('./routes/auditoria.routes');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(express.json());
 
 app.use('/api/reportes', reportesRoutes);
 app.use('/api/catalogos', catalogosRoutes);
+app.use('/api/operaciones', operacionesRoutes);
+app.use('/api/auditoria', auditoriaRoutes);
 
 app.get('/api/health', async (req, res) => {
   try {
