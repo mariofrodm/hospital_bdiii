@@ -1,0 +1,13 @@
+1	Consulta general	Consulta médica general	150.00	activo	2026-06-06 19:48:42.826682	\N
+2	Consulta especializada	Consulta con especialista	250.00	activo	2026-06-06 19:48:42.826682	\N
+3	Consulta pediátrica	Consulta médica especializada para pacientes pediátricos	200.00	activo	2026-06-07 02:36:19.945234	\N
+4	Consulta dermatológica	Evaluación dermatológica general	225.00	activo	2026-06-07 02:36:19.945234	\N
+5	Consulta traumatológica	Consulta especializada en lesiones musculoesqueléticas	275.00	activo	2026-06-07 02:36:19.945234	\N
+6	Electrocardiograma	Examen básico para evaluación cardiaca	180.00	activo	2026-06-07 02:36:19.945234	\N
+7	Curación menor	Procedimiento de limpieza y curación de heridas menores	100.00	activo	2026-06-07 02:36:19.945234	\N
+8	Control médico	Consulta de seguimiento o control posterior	125.00	activo	2026-06-07 02:36:19.945234	\N
+9	Examen de laboratorio básico	Paquete básico de laboratorio clínico	175.00	activo	2026-06-07 02:36:19.945234	\N
+10	Procedimiento menor	Procedimiento ambulatorio menor realizado en clínica	300.00	activo	2026-06-07 02:36:19.945234	\N
+\.
+
+
