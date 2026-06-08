@@ -2,11 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const pool = require('./config/postgres');
+
+const postgresRoutes = require('./routes/postgres.routes');
+const mongoRoutes = require('./routes/mongo.routes');
+
+// Conservar otros routers por compatibilidad
 const reportesRoutes = require('./routes/reportes.routes');
 const catalogosRoutes = require('./routes/catalogos.routes');
 const operacionesRoutes = require('./routes/operaciones.routes');
 const auditoriaRoutes = require('./routes/auditoria.routes');
-const mongoRoutes = require('./routes/mongo.routes');
 const backupRoutes = require('./routes/backup.routes');
 
 const app = express();
@@ -14,11 +18,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Registrar primero postgresRoutes y mongoRoutes para asegurar coincidencia exacta de los endpoints requeridos
+app.use('/api', postgresRoutes);
+app.use('/api/mongo', mongoRoutes);
+
+// Registros antiguos por retrocompatibilidad
 app.use('/api/reportes', reportesRoutes);
 app.use('/api/catalogos', catalogosRoutes);
 app.use('/api/operaciones', operacionesRoutes);
 app.use('/api/auditoria', auditoriaRoutes);
-app.use('/api/mongo', mongoRoutes);
 app.use('/api/backup', backupRoutes);
 
 app.get('/api/health', async (req, res) => {
