@@ -10,7 +10,7 @@
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-6 py-8">
+  <section class="mx-auto max-w-7xl space-y-8 px-6 py-8">
     <div class="grid gap-4 md:grid-cols-3">
       <article class="rounded-xl bg-white p-5 shadow">
         <h2 class="text-lg font-semibold">PostgreSQL</h2>
@@ -31,7 +31,7 @@
       </article>
     </div>
 
-    <div class="mt-8 rounded-xl bg-white p-6 shadow">
+    <section class="rounded-xl bg-white p-6 shadow">
       <div class="flex items-center justify-between gap-4">
         <div>
           <h2 class="text-xl font-bold">Dashboard general</h2>
@@ -41,7 +41,7 @@
         <button
           type="button"
           class="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
-          (click)="cargarResumen()">
+          (click)="cargarTodo()">
           Recargar
         </button>
       </div>
@@ -60,6 +60,106 @@
           <p class="mt-2 text-3xl font-bold text-slate-900">{{ item.total }}</p>
         </article>
       </div>
-    </div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-2">
+      <article class="rounded-xl bg-white p-6 shadow">
+        <h2 class="text-xl font-bold">Facturas pendientes</h2>
+        <p class="mt-1 text-sm text-slate-600">Vista normal vw_facturas_pendientes.</p>
+
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-600">
+              <tr>
+                <th class="px-3 py-2">Factura</th>
+                <th class="px-3 py-2">Paciente</th>
+                <th class="px-3 py-2">Saldo</th>
+                <th class="px-3 py-2">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let factura of facturasPendientes" class="border-b">
+                <td class="px-3 py-2">{{ factura.id_factura }}</td>
+                <td class="px-3 py-2">{{ factura.paciente }}</td>
+                <td class="px-3 py-2">Q {{ factura.saldo_pendiente }}</td>
+                <td class="px-3 py-2">{{ factura.estado }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="rounded-xl bg-white p-6 shadow">
+        <h2 class="text-xl font-bold">Ranking médicos</h2>
+        <p class="mt-1 text-sm text-slate-600">Vista materializada mv_ranking_medicos_trimestral.</p>
+
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-100 text-slate-600">
+              <tr>
+                <th class="px-3 py-2">Médico</th>
+                <th class="px-3 py-2">Especialidad</th>
+                <th class="px-3 py-2">Citas</th>
+                <th class="px-3 py-2">Facturado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let medico of rankingMedicos" class="border-b">
+                <td class="px-3 py-2">{{ medico.medico }}</td>
+                <td class="px-3 py-2">{{ medico.especialidad }}</td>
+                <td class="px-3 py-2">{{ medico.citas_atendidas }}</td>
+                <td class="px-3 py-2">Q {{ medico.monto_facturado }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="rounded-xl bg-white p-6 shadow">
+      <h2 class="text-xl font-bold">Facturación mensual</h2>
+      <p class="mt-1 text-sm text-slate-600">Vista materializada mv_facturacion_mensual.</p>
+
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-100 text-slate-600">
+            <tr>
+              <th class="px-3 py-2">Mes</th>
+              <th class="px-3 py-2">Especialidad</th>
+              <th class="px-3 py-2">Facturas</th>
+              <th class="px-3 py-2">Facturado</th>
+              <th class="px-3 py-2">Cobrado</th>
+              <th class="px-3 py-2">Pendiente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fila of facturacionMensual" class="border-b">
+              <td class="px-3 py-2">{{ fila.mes | date:'yyyy-MM-dd' }}</td>
+              <td class="px-3 py-2">{{ fila.especialidad }}</td>
+              <td class="px-3 py-2">{{ fila.cantidad_facturas }}</td>
+              <td class="px-3 py-2">Q {{ fila.total_facturado }}</td>
+              <td class="px-3 py-2">Q {{ fila.total_cobrado }}</td>
+              <td class="px-3 py-2">Q {{ fila.saldo_pendiente }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-2">
+      <article class="rounded-xl bg-white p-6 shadow">
+        <h2 class="text-xl font-bold">Estado MongoDB</h2>
+        <p class="mt-2 text-sm text-slate-600">{{ mongoEstado?.mensaje }}</p>
+        <p class="mt-4 text-sm"><strong>Base esperada:</strong> {{ mongoEstado?.base_esperada }}</p>
+        <p class="text-sm"><strong>Colección esperada:</strong> {{ mongoEstado?.coleccion_esperada }}</p>
+      </article>
+
+      <article class="rounded-xl bg-white p-6 shadow">
+        <h2 class="text-xl font-bold">Backup y restauración</h2>
+        <p class="mt-2 text-sm text-slate-600">{{ backupEstado?.mensaje }}</p>
+        <p class="mt-4 text-sm"><strong>Base principal:</strong> {{ backupEstado?.base_principal }}</p>
+        <p class="text-sm"><strong>Backup usado:</strong> {{ backupEstado?.backup_local_usado }}</p>
+      </article>
+    </section>
   </section>
 </main>
